@@ -7,7 +7,13 @@ import {
   Outlet,
   useNavigate,
   useParams
-} from 'react-router-dom';
+} from 'react-router-dom'
+
+import {
+  Provider
+} from 'react-redux'
+
+import { store } from './store'
 
 
 let NotImplemented = () => {
@@ -55,24 +61,26 @@ function App() {
   const isAuth = false;
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<NotImplemented />} />
-        
-        <Route path="/usuarios" element={isAuth ? <Navigate to="/" /> : <UsuariosOutlet />}>
-          <Route path="registro" element={<NotImplemented />} />
-          <Route path="login" element={<NotImplemented />} />  
-          <Route path=":id" element={<NotImplemented />} />
-          <Route path=":id/videos" element={<NotImplemented />} />
-        </Route>
-        
-        <Route path="/videos">
+      <Provider store={store}>
+        <Routes>
           <Route path="/" element={<NotImplemented />} />
-          <Route path="nuevo" element={<NotImplemented />} />
-          <Route path=":id" element={<VideoShow />} />
-        </Route>
+          
+          <Route path="/usuarios" element={isAuth ? <Navigate to="/" /> : <UsuariosOutlet />}>
+            <Route path="registro" element={<NotImplemented />} />
+            <Route path="login" element={<NotImplemented />} />  
+            <Route path=":id" element={<NotImplemented />} />
+            <Route path=":id/videos" element={<NotImplemented />} />
+          </Route>
+          
+          <Route path="/videos">
+            <Route path="/" element={<NotImplemented />} />
+            <Route path="nuevo" element={<NotImplemented />} />
+            <Route path=":id" element={<VideoShow />} />
+          </Route>
 
-        <Route path="*" element={<Error404 />}/>
-      </Routes>
+          <Route path="*" element={<Error404 />}/>
+        </Routes>
+      </Provider>
     </BrowserRouter>
   );
 }
